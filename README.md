@@ -1,13 +1,11 @@
-# React MongoDB Express Authentication
+# React Login and Registration Pages
 
-This project is a demonstration of a basic authentication system using React, MongoDB, Express, and Tailwind CSS.
+This project provides simple login and registration pages implemented using React, MongoDB, Express, and Tailwind CSS.
 
 ## Features
 
 - **Login Page**
 - **Registration Page**
-- **Authentication**
-- **MongoDB Database**
 
 ## Technologies Used
 
