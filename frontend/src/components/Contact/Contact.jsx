@@ -1,4 +1,42 @@
-export default function Contact() {
+import { useState } from "react";
+import toast from "react-hot-toast";
+const Contact = ()=> {
+  const [name,setName]=useState("")
+  const [email,setEmail]= useState("")
+  const [mobile,setMobile]= useState("")
+
+  const submitHandler = async (e) =>{
+    e.preventDefault();
+    console.log(name, email, mobile);
+
+    try {
+      const response = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          mobile: mobile,
+        }),
+      });
+  
+      // Log the status and response body for debugging
+      const responseBody = await response.json();
+      // navigate("/");
+      if (response.ok)
+        console.log("Success:", responseBody);
+      toast.success("Data successfully submitted!");
+      window.location.reload(); // Refresh the page
+      }
+ catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      toast.error(`Error: ${error.message}`);
+    }
+    
+  }
+
   return (
     <div className="relative flex items-top justify-center min-h-[700px]  bg-gray-100 sm:items-center sm:pt-0">
       <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -85,7 +123,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <form className="p-6 flex flex-col justify-center">
+            <form className="p-6 flex flex-col justify-center" onSubmit={submitHandler}>
               <div className="flex flex-col">
                 <label for="name" className="hidden">
                   Full Name
@@ -96,6 +134,8 @@ export default function Contact() {
                   id="name"
                   placeholder="Full Name"
                   className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                  onChange={(e)=>{setName(e.target.value)}}
+                  value={name}
                 />
               </div>
 
@@ -109,6 +149,8 @@ export default function Contact() {
                   id="email"
                   placeholder="Email"
                   className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                  onChange={(e)=>setEmail(e.target.value)}
+                  value={email}
                 />
               </div>
 
@@ -120,8 +162,10 @@ export default function Contact() {
                   type="tel"
                   name="tel"
                   id="tel"
-                  placeholder="Telephone Number"
+                  placeholder="Mobile Number"
                   className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                  onChange={(e)=>setMobile(e.target.value)}
+                  value={mobile}
                 />
               </div>
 
@@ -138,3 +182,5 @@ export default function Contact() {
     </div>
   );
 }
+
+export default Contact;

@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./db/config');
 const User = require('./models/User')
+const Contact = require('./models/Contact')
 const cors =require('cors')
 
 const dotenv = require('dotenv');
@@ -14,6 +15,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 
+ app.use("/contact", async (req,res)=>{
+  const data = new Contact(req.body);
+  console.log(req.body)
+  const result = await data.save();
+  res.send(result);
+ })
 
  app.post("/register", async (req, res) => {
   const data = new User(req.body)
