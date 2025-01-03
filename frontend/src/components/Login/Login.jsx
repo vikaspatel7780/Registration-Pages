@@ -25,7 +25,7 @@ const Login = () => {
         "content-Type": "application/json",
       },
     });
-    // console.log(result)
+    
     result = await result.json();
     console.log(result);
 
